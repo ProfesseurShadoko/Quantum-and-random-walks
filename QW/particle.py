@@ -35,6 +35,22 @@ class Particle(Tensor):
         out.normalize()
         return out
     
+    def gaussian(self,mean:tuple,std:float):
+        """
+        Args:
+            mean (float)
+            std (float)
+            
+        Returns:
+            Particle : particle filled with gaussian distribution depending on distance to mean, and then normalized
+        """
+        out = self.copy()
+        
+        for position in self.positions():
+            out[position]=np.exp(-sum((x-y)**2 for x,y in zip(position,mean)) / (2*std**2))
+        out.normalize()
+        return out
+    
     def __getitem__(self,idx:tuple)->complex:
         if isinstance(idx,int):
             idx = (idx,)
