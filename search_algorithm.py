@@ -33,6 +33,8 @@ dt = hamiltonian.timescale()*0.01*1j
 walk = CTW(particle,hamiltonian,dt)
 
 # solving and running
+
+print(f"Continous-Grover :",f"- {N=}",f"- target=({','.join(map(str,target))})",f"- gamma={gammas[d]}",f"- std of initial particle : {std}",sep="\n\t")
 walk.solve(1000)
 walk.run(
     keep_scale=False,
