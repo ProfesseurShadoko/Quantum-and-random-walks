@@ -1,11 +1,16 @@
 from QW.qw import *
 
 d=2
-N=11
-std=4
+N=20
+std=2
 target=tuple(np.random.randint(N//3,2*N//3) for _ in range(d))
 
-gammas=[0,1.2,1.4,2.0] #gamma-1D = gammas[1] = 1.2
+gammas=[
+    0,
+    1.15,
+    1.4,
+    2.0
+] #gamma-1D = gammas[1] = 1.15
 
 
 # initializing particle with gaussian distribution around the center of the grid
@@ -38,5 +43,17 @@ print(f"Continous-Grover :",f"- {N=}",f"- target=({','.join(map(str,target))})",
 walk.solve(1000)
 walk.run(
     keep_scale=False,
-    speed_up=3
+    speed_up=0.5
+)
+
+
+# plotting evolution of target site
+
+walk.__class__= CTG_n # use function to analyse
+walk:CTG_n = walk # type hints, useless
+walk.target = target
+
+walk.plot_target_evolution(
+    show_second_strongest=True,
+    plot_topt_line=True
 )
