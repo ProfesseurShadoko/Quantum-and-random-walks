@@ -3,7 +3,7 @@ from QW.qw import *
 d=2
 N=20
 std=2
-target=tuple(np.random.randint(N//3,2*N//3) for _ in range(d))
+target=(13,13) # this has to be a tuple (even in 1D), for a walk in 1D, target = (13,)
 
 gammas=[
     0,
@@ -20,6 +20,8 @@ particle = particle.gaussian(
     std
 )
 
+particle = particle.uniform()
+
 # initializing search hamiltonian
 hamiltonian:Operator = tensor(Operator(N),pow=d)
 
@@ -33,27 +35,18 @@ for neighbour in hamiltonian.neighbours(*target):
     hamiltonian[neighbour,target] = gammas[d]
     
     
-# definig the walk as a quantum walk + choosing the right timescale
+# definig the walk as a quantum walk (1j factor) + choosing the right timescale
 dt = hamiltonian.timescale()*0.01*1j
 walk = CTW(particle,hamiltonian,dt)
 
 # solving and running
 
 print(f"Continous-Grover :",f"- {N=}",f"- target=({','.join(map(str,target))})",f"- gamma={gammas[d]}",f"- std of initial particle : {std}",sep="\n\t")
-walk.solve(1000)
+walk.solve(3000)
 walk.run(
     keep_scale=False,
     speed_up=0.5
 )
 
-
 # plotting evolution of target site
-
-walk.__class__= CTG_n # use function to analyse
-walk:CTG_n = walk # type hints, useless
-walk.target = target
-
-walk.plot_target_evolution(
-    show_second_strongest=True,
-    plot_topt_line=True
-)
+walk.follow_target(target)

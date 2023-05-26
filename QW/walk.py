@@ -8,6 +8,7 @@ from .particle_plotter import ParticlePlotter
 from scipy import linalg as alg
 import matplotlib.pyplot as plt
 import matplotlib.animation as anim
+import numpy as np
 
 class Walk:
     
@@ -97,6 +98,98 @@ class Walk:
         
         ani = anim.FuncAnimation(fig,animate,interval=10)
         plt.show()
+        
+    # analysis tools for search walk
+    
+    def follow_target(self,target:tuple,ax:plt.Axes=None,plot_ghost:bool=True,plot_topt:bool=True)->None:
+        """plots the evolution of the amplitude of the targeted site ()
+
+        Args:
+            target (tuple): coordinates of the site that should be looked at
+            ax (plt.Axes, optional): ax on which to plot. Defaults to None (figure is created  automatically and plt.show() is called).
+            plot_ghost (bool, optional): ghost = maximal amplitude over the lattice except for the target. Defaults to True.
+            plot_topt (bool, optional): finds t_opt and plots a vertical red line. Defaults to True.
+        """
+        
+        create_ax = (ax==None)
+        
+        if create_ax:
+            fig = plt.figure()
+            ax = plt.subplot(111)
+            
+        if type(target)==int:
+            target=(target,)
+        
+        # probability of target over time
+        X = [t for t in range(len(self.particle_over_time))]
+        P = [self.get_particle(t).amplitude(*target) for t in X]
+        T = self._find_first_peak(P)
+        
+        # lets find the ghost = maximal amplitude over the lattice with target removed
+        P2=[]
+        for t in X:
+            abs_vals = np.abs(self.get_particle(t).array)
+            abs_vals[self.particle.to_index(*target)] = 0
+            P2.append(np.max(np.max(abs_vals))**2)
+        
+        ax.plot(X,P,label=f"P(x={target})")
+        if plot_ghost:
+            ax.plot(X,P2,color="grey",label=f"Fantôme")
+        
+        if T!=0 and plot_topt:
+            ax.axvline(x=T,color="r",linestyle=":",label=f"Premier pic : {T} (10e-2 u)")
+        
+        if create_ax:
+            plt.title("Probabilité du site cible au cours du temps")
+            plt.xlabel(f"Temps ({10e-2:.1e}*u)")
+            plt.ylabel("Probabilité")
+            plt.legend()
+            plt.show()
+        
+    def get_topt(self,target:tuple):
+        
+        if type(target)==int:
+            target=(target,)
+    
+        P = [self.get_particle(t).amplitude(*target) for t in range(len(self.particle_over_time))]
+        return self._find_first_peak(P)
+    
+    @staticmethod
+    def _find_first_peak(signal:np.ndarray,treshold:float=0.6)->int:
+        
+        # signal above the treshold
+        high_signal = signal > np.min(signal) + treshold * (np.max(signal) - np.min(signal))
+        
+        # compute connex components of high signal
+        connexe_components = []
+        region = []
+        for i, b in enumerate(high_signal):
+            if b:
+                region.append(i)
+            else:
+                if region==[]:
+                    continue
+                else:
+                    connexe_components.append(region)
+                    region=[]
+                    
+        # get the average position of each region
+        avg_positions = [np.mean(region) for region in connexe_components]
+       
+        if len(avg_positions)==1:
+            return np.argmax(signal)
+        if len(avg_positions)==0:
+            print("weird, no position...")
+            return 0
+        
+        # distance between pics
+        distances = np.diff(avg_positions)
+        T = np.max(distances)
+        
+        # let's make sure that the first maximum falls on a period, because it is the first maximum that is most important
+        first_max = np.argmax(signal[:int(T)])
+        return first_max
+        
     
 
 class CountinousTimeWalk(Walk):
