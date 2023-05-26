@@ -6,7 +6,10 @@ import numpy as np
 
 class ParticlePlotter:
     
+    use_cbar = False
+    
     _cbar = None
+    _warned = False
     
     @staticmethod
     def plot_1D(particle:Particle,ax:plt.Axes):
@@ -46,7 +49,8 @@ class ParticlePlotter:
         Z=particle.distribution()
         
         ax.plot_surface(X,Y,Z,cmap="plasma")
-        
+    
+    @staticmethod   
     def plot_3D(particle:Particle,ax:Axes3D):
         dist = particle.distribution()
         X = [pos[0] for pos in particle.positions()]
@@ -59,13 +63,18 @@ class ParticlePlotter:
         
         p1=ax.scatter(X,Y,Z,c=VAL,cmap="plasma",s=RADIUS)
         
-        try:
-            ParticlePlotter._cbar.remove()
-        except:
-            pass
-        ParticlePlotter._cbar = plt.colorbar(p1,label="probability")
+        if not ParticlePlotter._warned:
+            ParticlePlotter._warned = True
+            print("[log] : WARNING when plotting in 3D, you might get an error with the colorbar duplicating itself. This is why the colorbar is disabled. You can reable it with :\n\tParticlePlotter.use_cbar=True")
         
-    
+        if ParticlePlotter.use_cbar:
+            try:
+                ParticlePlotter._cbar.remove()
+            except:
+                pass
+            ParticlePlotter._cbar = plt.colorbar(p1,label="probability")
+        
+    @staticmethod
     def plot(particle:Particle,ax:Axes3D):
         if len(particle.dim)==1:
             ParticlePlotter.plot_1D(particle,ax)

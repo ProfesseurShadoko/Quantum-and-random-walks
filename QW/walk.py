@@ -102,12 +102,12 @@ class Walk:
     # analysis tools for search walk
     
     def follow_target(self,target:tuple,ax:plt.Axes=None,plot_ghost:bool=True,plot_topt:bool=True)->None:
-        """plots the evolution of the amplitude of the targeted site ()
+        """plots the evolution of the amplitude of the targeted site
 
         Args:
             target (tuple): coordinates of the site that should be looked at
             ax (plt.Axes, optional): ax on which to plot. Defaults to None (figure is created  automatically and plt.show() is called).
-            plot_ghost (bool, optional): ghost = maximal amplitude over the lattice except for the target. Defaults to True.
+            plot_ghost (bool, optional): ghost is the maximal amplitude over the lattice except for the target. Defaults to True.
             plot_topt (bool, optional): finds t_opt and plots a vertical red line. Defaults to True.
         """
         
@@ -130,7 +130,7 @@ class Walk:
         for t in X:
             abs_vals = np.abs(self.get_particle(t).array)
             abs_vals[self.particle.to_index(*target)] = 0
-            P2.append(np.max(np.max(abs_vals))**2)
+            P2.append(np.max(abs_vals)**2)
         
         ax.plot(X,P,label=f"P(x={target})")
         if plot_ghost:

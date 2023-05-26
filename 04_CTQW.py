@@ -1,10 +1,10 @@
 from QW.qw import *
 
-# creating a continous time random walk in 3 dimensions over a grid of size NxN
+# creating a continous time random walk in 3 dimensions over a grid of size NxNxN
 N=11
 
 particle:QParticle = tensor(
-    Particle(N,N//2),
+    QParticle(N),
     pow=3
 )
 particle = particle.uniform()
@@ -27,5 +27,7 @@ dt = hamiltonian.timescale()* 1j * 0.01
 
 # performing the walk (CTW stands for continous time walk)
 walk = CTW(particle,hamiltonian,dt)
-walk.solve(500)
+walk.solve(3000)
 walk.run()
+
+walk.follow_target(target)
