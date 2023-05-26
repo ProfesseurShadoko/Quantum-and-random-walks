@@ -20,8 +20,6 @@ particle = particle.gaussian(
     std
 )
 
-particle = particle.uniform()
-
 # initializing search hamiltonian
 hamiltonian:Operator = tensor(Operator(N),pow=d)
 
