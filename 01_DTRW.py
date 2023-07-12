@@ -1,31 +1,39 @@
 from QW.qw import *
 
-# creating a random walk in 1 dimension over a grid of size N
+################################
+# 1 DIMENSIONAL GRID OF SIZE N #
+################################
 N=101
 
-# initializing the particle on position N//2
+
+##################################################
+# INITIALIZATION OF THE PARTICLE ON POSITION N/2 #
+##################################################
 particle = Particle(N,N//2)
 print(repr(particle))
 
-# crating walk operator
+
+#######################################
+# INITIALIZATION OF THE WALK OPERATOR #
+#######################################
 operator = Operator(N)
 for i in range(N-1):
     operator[i,i+1] = 0.5
     operator[i+1,i] = 0.5
 
-# performing the walk (DTW stands for discrete time walk)
+
+#######################
+# PERFORMING THE WALK #
+#######################
 walk = DTW(particle,operator)
 walk.solve(N//2)
 
-# getting the result of the walk
 last_particle = walk.particle
-
 print(f"Mean position : {last_particle.mean()}")
 print(f"Variance : {last_particle.variance()}")
 print(f"Std :  {last_particle.std()}")
 
-# plotting the result of the walk (only even positions)
-X = range(0,N,2)
+X = range(0,N,2) # plotting the result of the walk (only even positions)
 Y = walk.particle.distribution()[::2]
 plt.plot(X,Y)
 plt.show()

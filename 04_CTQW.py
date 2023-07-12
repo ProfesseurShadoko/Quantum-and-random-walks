@@ -1,8 +1,14 @@
 from QW.qw import *
 
-# creating a continous time random walk in 3 dimensions over a grid of size NxNxN
+####################################
+# 3 DIMENSIONAL GRID OF SIZE NxNxN #
+####################################
 N=11
 
+
+##################################
+# INITIALIZATION OF THE PARTICLE #
+##################################
 particle:QParticle = tensor(
     QParticle(N),
     pow=3
@@ -10,13 +16,16 @@ particle:QParticle = tensor(
 particle = particle.uniform()
 print(repr(particle))
 
+#####################################
+# INITIALIZATION OF THE HAMILTONIAN #
+#####################################
 # creating walk operator with coupling between direct neighbour positions
 hamiltonian:Operator = Operator([N,N,N]) #equivalent to tensor(Operator(N),pow=3))
 for position in hamiltonian.positions():
     for neighbour in particle.neighbours(*position):
         hamiltonian[position,neighbour] = 1
 
-# adding a target to the walk
+# adding a target to the walk (see the algorithm we created in the report / README.ipynb)
 target = (5,7,3)
 for neighbour in particle.neighbours(*target):
     hamiltonian[target,neighbour] = 2
