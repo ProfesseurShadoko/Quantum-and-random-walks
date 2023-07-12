@@ -104,13 +104,14 @@ class Particle(Tensor):
         e = self.mean()
         dist = self.distribution()
         
-        def distance(pos1,pos2):
-            return np.sqrt(sum(
+        def distance_squared(pos1,pos2):
+            return sum(
                 (x1-x2)**2 for x1,x2 in zip(pos1,pos2)
-            ))
+            )
+        
         
         return sum(
-            distance(pos,e)*dist[pos] for pos in self.positions()
+            distance_squared(pos,e)*dist[pos] for pos in self.positions()
         )
     
     def std(self)->float:
