@@ -7,18 +7,17 @@ d=2
 N=20
 std=2
 target=(13,13) # this has to be a tuple (even in 1D), for a walk in 1D, target = (13,)
-use_uniform_particle = True
+use_uniform_particle = True # else initialization with gaussian(std=std)
 
 
 ################################
 # OPTIMIZED GAMMA FOR 1D,2D,3D #
 ################################
-gammas=[
-    np.nan,
-    1.15,
-    1.4,
-    2.0
-]
+gammas={
+    1:1.15,
+    2:1.4,
+    3:2.0
+}
 
 
 ##################################

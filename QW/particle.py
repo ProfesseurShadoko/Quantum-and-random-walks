@@ -97,6 +97,7 @@ class Particle(Tensor):
         Returns:
             np.ndarray: mean position of the particle
         """
+        assert self.norm() != 0, "Particle has no position, cannot define its mean position"
         dist = self.distribution()
         return sum(dist[pos]*np.array(pos) for pos in self.positions()) / self.norm()
     
