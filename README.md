@@ -101,9 +101,9 @@ On remarque que l'amplitude au niveau du site cible oscille au cours du temps, o
 <img src="REPORT_IMG\RegRac3D (1) (1).png" height="500">
 </center>
 
-Les regressions que nous avons effectuées montrent que la dépendance est effectivement en $sqrt(N)$ (et ce à 1, 2 et 3 dimensions), ce qui montre le succès de notre algorithme. Tous ces résultats sont présentés dans le <a href="PDF\Soutenance.pdf">rapport</a> et dans les <a href="PDF\Soutenance.pdf">slides de la soutenance</a> (attention, le rapport contient des erreurs quand à la complexité de notre algorithme, pour avoir les bons résultats, se réferer aux slides de la soutenance).
+Les regressions que nous avons effectuées montrent que la dépendance est effectivement en $sqrt(N)$ (et ce à 1, 2 et 3 dimensions), ce qui montre le succès de notre algorithme. Tous ces résultats sont présentés dans le <a href="PDF\Soutenance.pdf">rapport</a> et dans les <a href="PDF\Soutenance.pdf">slides de la soutenance</a>.
 
-Toutefois, le but de ce *Notebook* est différent. En effet, il n'est en réalité pas possible d'avoir une répartition uniforme de la particule à l'instant initial, mais il est possible, en utilisant des isolants de Motte, d'obtenir une distribution gaussienne autour du centre du réseau. **Nous cherchons donc à savoir s'il est possible de se contenter d'une distribution gaussienne pour l'initialisation de la particule dans notre algorithme**.
+Toutefois, le but de ce *Notebook* est différent (il correspond aux derniers paragraphes du rapport). En effet, il n'est en réalité pas possible d'avoir une répartition uniforme de la particule à l'instant initial, mais il est possible, en utilisant des isolants de Motte, d'obtenir une distribution gaussienne autour du centre du réseau. **Nous cherchons donc à savoir s'il est possible de se contenter d'une distribution gaussienne pour l'initialisation de la particule dans notre algorithme**.
 
 ___
 ## 3. Étude avec une initialisation gaussienne
@@ -247,8 +247,3 @@ Ensuite, nos regressions sont difficiles à effectuer, et ce pour deux raisons. 
 L'échec de notre algorithme initial face à une initialisation gaussienne, qui n'est que linéaire, vient des effets de bord qui freinent l'étalement de la distribution sur le réseau. La nouvelle stratégie que nous avons implémentée sépare simplement l'algorithme en deux temps. On commence par étaler la particule sur un réseau élargi pour éviter les effets de bords, ce qu'il est possible de faire en temps sous-linéaire grâce aux propriétés des marches aléatoires quantiques. On applique ensuite notre algorithme initial, qui s'effectue lui aussi en temps sous-linéaire. On obtient ainsi effectivement un algorithme qui trouve un sommet en temps sous-linéaire sur un réseau à 2 ou 3 dimensions.
 
 Quant à l'application expérimentale à 1D, elle est bien possible et renverra le bon résultat (selon nos simulations), que ce soit dans le cadre de notre algorithme initial ou dans le cadre de notre nouvelle implémentation, parce que le nombre de sites du réseau restera très limité.
-
-
-```python
-!jupyter nbconvert --to markdown ./README.ipynb
-```
