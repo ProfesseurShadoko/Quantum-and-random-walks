@@ -10,7 +10,7 @@ En effet, l'Institut d'Optique a développé un outil de mesure qui permet de co
 
 La raison pour laquelle on s'intéresse à une marche aléatoire est que le dispositif de l'Institut d'Optique pourrait permettre de réaliser une marche en trois dimensions, grâce à la mesure des trois composantes de la particule, ce qui constituerait une première. En effet, à l'aide de laser, il est possible de modifier aléatoirement l'impulsion de la particule et ainsi réaliser la marche dans l'espace des moments.
 
-Nous vous invintons à consulter le <a href="PDF\Soutenance.pdf">rapport</a> ainsi que les <a href="PDF\Soutenance.pdf">slides de la soutenance</a> pour plus de précisions sur les détails techniques des transitions à deux photons qui permettent d'agir sur les impulsions des particules.
+Nous vous invintons à consulter le <a href="PDF\Rapport.pdf">rapport</a> ainsi que les <a href="PDF\Soutenance.pdf">slides de la soutenance</a> pour plus de précisions sur les détails techniques des transitions à deux photons qui permettent d'agir sur les impulsions des particules.
 
 En résumé, notre PSC avait pour but de trouver une application aux marches aléatoires quantiques à 3 dimensions qui tient compte des contraintes imposées par le dispositifs de l'Institut d'Optique. Dans la suite, nous décrivons ce que nous avons proposé.
 
@@ -101,7 +101,7 @@ On remarque que l'amplitude au niveau du site cible oscille au cours du temps, o
 <img src="REPORT_IMG\RegRac3D (1) (1).png" height="500">
 </center>
 
-Les regressions que nous avons effectuées montrent que la dépendance est effectivement en $sqrt(N)$ (et ce à 1, 2 et 3 dimensions), ce qui montre le succès de notre algorithme. Tous ces résultats sont présentés dans le <a href="PDF\Soutenance.pdf">rapport</a> et dans les <a href="PDF\Soutenance.pdf">slides de la soutenance</a>.
+Les regressions que nous avons effectuées montrent que la dépendance est effectivement en $sqrt(N)$ (et ce à 1, 2 et 3 dimensions), ce qui montre le succès de notre algorithme. Tous ces résultats sont présentés dans le <a href="PDF\Rapport.pdf">rapport</a> et dans les <a href="PDF\Soutenance.pdf">slides de la soutenance</a>.
 
 Toutefois, le but de ce *Notebook* est différent (il correspond aux derniers paragraphes du rapport). En effet, il n'est en réalité pas possible d'avoir une répartition uniforme de la particule à l'instant initial, mais il est possible, en utilisant des isolants de Motte, d'obtenir une distribution gaussienne autour du centre du réseau. **Nous cherchons donc à savoir s'il est possible de se contenter d'une distribution gaussienne pour l'initialisation de la particule dans notre algorithme**.
 
